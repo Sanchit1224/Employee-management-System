@@ -1,0 +1,109 @@
+.user-dashboard {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2, h3 {
+    color: #333;
+  }
+  
+  button {
+    margin: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+  }
+  
+  button {
+    background: #007bff;
+    color: white;
+  }
+  
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    height: 100vh;
+    height: calc(100vh - 60px); /* Adjust height considering header */
+    margin-top: 60px; /* Push content below the header */
+}
+
+.sidebar {
+    width: 250px;
+    background: #373d44;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 86px;
+}
+
+.sidebar h4 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar ul li:hover, .sidebar ul li.active {
+    background: #687078;
+}
+
+.sidebar .icon {
+    font-size: 1.4rem;
+}
+
+.content {
+    margin-left: 270px;
+    padding: 30px;
+    width: 100%;
+}
+
+.content-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}

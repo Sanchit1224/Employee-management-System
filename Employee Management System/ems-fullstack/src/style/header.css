@@ -1,0 +1,36 @@
+.col {
+    background-color: #696969;
+
+}
+
+.col a {
+    color: white;
+}
+
+.col a:hover {
+    color: white;
+}
+.navi{
+    cursor: pointer;
+    font-size: 1.7em; /* Increase link size */
+    font-weight: bold; /* Make it stand out */
+}
+
+.navbar .container {
+    max-width: 1200px; /* Adjust for wider layout */
+    padding: 10px 20px;
+}
+
+.navbar{
+    padding: 20px 30px; /* Increase padding for more height */
+    font-size: 1.7rem; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.navbar-brand .navi{
+    font-size: 1.8rem; /* Increase font size of Employee Management System */
+}
+
+.me-1 {
+    font-size: 1.8rem; /* Increase font size of Login & Register */
+}
