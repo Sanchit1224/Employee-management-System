@@ -50,7 +50,3 @@ spring.datasource.url=jdbc:mysql://localhost:3306/employee_db
 spring.datasource.username=root
 spring.datasource.password=yourpassword
 spring.jpa.hibernate.ddl-auto=update
-
-![image](https://github.com/user-attachments/assets/4fd75291-3759-4b2f-8952-682c09937de3)
-
-
