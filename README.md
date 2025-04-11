@@ -1,8 +1,6 @@
 # Employee-management-System
 Employee Management System is a full-stack web application that allows users and administrators to manage employee data efficiently. It features separate User and Admin panels, with functionality to create, read, update, and delete employee records using a React.js frontend, Spring Boot backend, and MySQL database.
 
-# Employee Management System
-
 A full-stack Employee Management System built using **React.js** for the frontend, **Spring Boot** for the backend, and **MySQL** as the database. This project allows users to perform CRUD operations on employee records.
 
 ## Features
