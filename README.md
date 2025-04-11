@@ -7,12 +7,15 @@ A full-stack Employee Management System built using **React.js** for the fronten
 
 ## Features
 
-- Add new employees
-- View employee list
-- Update employee details
-- Delete employees
-- RESTful API integration
-- Responsive user interface
+👤 User Panel
+Mark attendance
+Apply for leave
+View payroll information
+
+🛠️ Admin Panel
+Approve or deny leave requests
+Perform Restful Operations of Employee
+Make Payroll
 
 ## Tech Stack
 
