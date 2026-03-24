@@ -70,6 +70,12 @@ spring.jpa.hibernate.ddl-auto=update
 ### 📝 **Leave Management**
 ![User Leave](User_Leave.png)
 
+### 📅 **Attendance Management**
+![Attendance](Attendance_Page.png)
+
+### 🔔 **Notifications**
+![Notifications](Notification_Page.png)
+
 ### 👨‍💼 **Manager Panel**
 ![Manager Page](Manager_Page.png)
 
