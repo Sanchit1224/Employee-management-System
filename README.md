@@ -1,50 +1,57 @@
 # Employee-management-System
-Employee Management System is a full-stack web application that allows users and administrators to manage employee data efficiently. It features separate User and Admin panels, with functionality to create, read, update, and delete employee records using a React.js frontend, Spring Boot backend, and MySQL database.
 
-A full-stack Employee Management System built using **React.js** for the frontend, **Spring Boot** for the backend, and **MySQL** as the database. This project allows users to perform CRUD operations on employee records.
+Employee Management System is a full-stack web application that allows users, managers, and administrators to manage employee data efficiently. It features separate User, Manager, and Admin panels with role-based access control, enabling smooth handling of employee operations.
+
+A full-stack Employee Management System built using **React.js** for the frontend, **Spring Boot** for the backend, and **MySQL** as the database. This project allows role-based CRUD operations and workflow management for employees.
 
 ## Features
 
-👤 User Panel
-Mark attendance
-Apply for leave
-View payroll information
+👤 User Panel  
+- Mark attendance  
+- Apply for leave  
+- View payroll information  
 
-🛠️ Admin Panel
-Approve or deny leave requests
-Perform Restful Operations of Employee
-Make Payroll
+👨‍💼 Manager Panel  
+- Monitor team members  
+- Review and manage leave requests  
+- Add and manage new employees  
+
+🛠️ Admin Panel  
+- Approve or deny leave requests  
+- Perform RESTful operations on employees  
+- Manage payroll  
+- Full system control  
 
 ## Tech Stack
 
 ### Frontend
-- React.js
-- Axios (for API calls)
-- Bootstrap / TailwindCSS (optional UI styling)
+- React.js  
+- Axios (for API calls)  
+- Bootstrap / TailwindCSS (optional UI styling)  
 
 ### Backend
-- Spring Boot
-- Spring Data JPA
-- REST API
+- Spring Boot  
+- Spring Data JPA  
+- REST API  
 
 ### Database
-- MySQL
-
+- MySQL  
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm
-- Java JDK 17+ or 11+
-- MySQL
-- Maven
+- Node.js and npm  
+- Java JDK 17+ or 11+  
+- MySQL  
+- Maven  
 
 ### Backend Setup
 
-1. Clone the repository.
-2. Import the backend folder in your IDE (e.g., IntelliJ, Eclipse).
+1. Clone the repository.  
+2. Import the backend folder in your IDE (e.g., IntelliJ, Eclipse).  
 3. Configure `application.properties` with your MySQL credentials:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/employee_db
 spring.datasource.username=root
