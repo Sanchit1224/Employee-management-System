@@ -24,7 +24,7 @@ const Login = () => {
       const { token, userId, role } = response.data;
 
       if (token) {
-        localStorage.setItem("token", token); // Store token in localStorage
+        localStorage.setItem("authToken", token);
         localStorage.setItem("userId", userId.toString());
         localStorage.setItem("role", role);
 
@@ -35,6 +35,8 @@ const Login = () => {
         setTimeout(() => {
           if (role === "ADMIN") {
             navigate("/admin");
+          } else if (role === "MANAGER") {
+            navigate("/manager");
           } else {
             navigate("/user");
           }

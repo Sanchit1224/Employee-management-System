@@ -6,11 +6,18 @@ import "../style/header.css";
 
 function Header() {
     const { user, logout } = useContext(AuthContext);
+    const homePath = user
+        ? user.role === "ADMIN"
+            ? "/admin"
+            : user.role === "MANAGER"
+                ? "/manager"
+                : "/user"
+        : "/login";
 
     return (
         <nav className="navbar bg-body-primary col">
             <div className="container d-flex justify-content-between align-items-center">
-                <Link className="navbar-brand navi" to={user ? (user.role === "ADMIN" ? "/admin" : "/user") : "/login"}
+                <Link className="navbar-brand navi" to={homePath}
                  style={{ fontSize: "1.7rem", fontWeight: "bold" }}>
                     Employee Management System
                 </Link>

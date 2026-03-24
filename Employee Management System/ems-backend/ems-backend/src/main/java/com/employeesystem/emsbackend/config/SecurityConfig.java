@@ -43,10 +43,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register", "/api/emp/**","/api/leave/requests","/api/leave/approve/**", "/api/leave/deny/**").permitAll() // Public Endpoints
-                        .requestMatchers("/api/user/**", "/api/user/leave/**", "/api/user/payroll/**", "/api/leave/apply").hasRole("USER") // User Access
-                        .requestMatchers("/api/emp", "/api/emp/**", "/api/admin/**",
-                                "/api/leave/requests", "/api/leave/approve/**", "/api/leave/deny/**").hasRole("ADMIN")// Admin Access
+                        .requestMatchers("/auth/login", "/auth/register").permitAll() // Public endpoints
+                        .requestMatchers("/api/admin/**",
+                                "/api/leave/approve/**", "/api/leave/deny/**",
+                                "/api/user/payroll/add").hasRole("ADMIN") // Admin access
+                        .requestMatchers("/api/emp/**", "/api/leave/requests").hasAnyRole("ADMIN", "MANAGER") // Admin/Manager access
+                        .requestMatchers("/api/user/**", "/api/leave/apply", "/api/leave/my-requests/**",
+                                "/api/user/payroll/**").hasRole("USER") // User access
                         .anyRequest().authenticated() // All Other Requests Require Authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

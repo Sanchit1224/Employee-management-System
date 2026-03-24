@@ -1,13 +1,12 @@
 package com.employeesystem.emsbackend.controller;
 
 import com.employeesystem.emsbackend.entity.Payroll;
+import com.employeesystem.emsbackend.service.AuditLogService;
 import com.employeesystem.emsbackend.service.PayrollService;
-import com.employeesystem.emsbackend.service.UserService;
+import com.employeesystem.emsbackend.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -15,7 +14,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PayrollController {
     private final PayrollService payrollService;
-    private final UserService userService;
+    private final AuditLogService auditLogService;
+    private final JwtUtil jwtUtil;
 
     // ✅ Get Payroll Details by User ID
     @GetMapping("/{userId}")
@@ -27,8 +27,16 @@ public class PayrollController {
 
     // ✅ Create or Update Payroll
     @PostMapping("/add")
-    public ResponseEntity<?> addPayroll(@RequestBody Payroll payroll) {
+    public ResponseEntity<?> addPayroll(@RequestHeader("Authorization") String token,
+                                        @RequestBody Payroll payroll) {
         Payroll savedPayroll = payrollService.savePayroll(payroll);
+        String adminUsername = jwtUtil.extractUsername(token.substring(7));
+        Long payrollUserId = savedPayroll.getUser() != null ? savedPayroll.getUser().getId() : null;
+        auditLogService.logAction(
+                "UPSERT_PAYROLL",
+                adminUsername,
+                "Updated payroll for user ID: " + payrollUserId + ", period: " + savedPayroll.getPayPeriod()
+        );
         return ResponseEntity.ok(savedPayroll);
     }
 }

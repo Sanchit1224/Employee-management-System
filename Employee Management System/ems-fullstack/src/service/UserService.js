@@ -24,6 +24,19 @@ export const markAttendance = async (token, userId, status = "PRESENT") => {
   }
 };
 
+export const getAttendanceHistory = async (token, userId) => {
+  try {
+    const response = await axios.get(
+      `${USER_API}/attendance/${userId}`,
+      { headers: authHeader(token) }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching attendance history:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 // ✅ Apply for Leave
 export const applyLeave = async (token,leaveRequest) => {
   try {
@@ -40,6 +53,19 @@ export const applyLeave = async (token,leaveRequest) => {
   }
 };
 
+export const getMyLeaveRequests = async (token, userId) => {
+  try {
+    const response = await axios.get(
+      `${LEAVE_API}/leave/my-requests/${userId}`,
+      { headers: authHeader(token) }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching leave history:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 //  Get Payroll Details
 export const getPayroll = async (token, userId) => {
   try {
@@ -49,7 +75,25 @@ export const getPayroll = async (token, userId) => {
     );
     return response.data;
   } catch (error) {
+    if (error?.response?.status === 404) {
+      return null;
+    }
     console.error("Error fetching payroll details:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Create or update payroll (admin)
+export const upsertPayroll = async (token, payrollData) => {
+  try {
+    const response = await axios.post(
+      `${USER_API}/payroll/add`,
+      payrollData,
+      { headers: authHeader(token) }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error saving payroll:", error.response?.data || error.message);
     throw error;
   }
 };

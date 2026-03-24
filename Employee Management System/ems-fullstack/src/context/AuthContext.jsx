@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Correct import
+import API from "../api/axios";
+import { toast } from "react-toastify";
 
 
 const AuthContext = createContext();
@@ -26,6 +28,34 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!user?.token) return;
+
+    API.get("/auth/me")
+      .then((response) => {
+        const serverUser = response.data;
+        const roleMismatch = serverUser?.role !== user.role;
+        const idMismatch = String(serverUser?.userId) !== String(user.userId);
+
+        if (roleMismatch || idMismatch) {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("role");
+          localStorage.removeItem("userId");
+          setUser(null);
+          toast.error("Session mismatch detected. Please login again.");
+          navigate("/login");
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("userId");
+        setUser(null);
+        toast.error("Session expired or invalid. Please login again.");
+        navigate("/login");
+      });
+  }, [user, navigate]);
+
   const login = (token, userId, role) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("role", role);
@@ -41,7 +71,13 @@ export const AuthProvider = ({ children }) => {
 
     setUser({ token, role, userId });
 
-    navigate(role === "ADMIN" ? "/admin" : "/user"); // Redirect based on role
+    if (role === "ADMIN") {
+      navigate("/admin");
+    } else if (role === "MANAGER") {
+      navigate("/manager");
+    } else {
+      navigate("/user");
+    }
   };
 
   const logout = () => {

@@ -1,14 +1,13 @@
 package com.employeesystem.emsbackend.controller;
 
 import com.employeesystem.emsbackend.entity.LeaveRequest;
-import com.employeesystem.emsbackend.entity.Role;
 import com.employeesystem.emsbackend.entity.User;
 
+import com.employeesystem.emsbackend.service.AuditLogService;
 import com.employeesystem.emsbackend.service.LeaveService;
 import com.employeesystem.emsbackend.service.UserService;
 import com.employeesystem.emsbackend.utils.JwtUtil;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +26,7 @@ public class LeaveController {
     private final LeaveService leaveService;
     private final UserService userService;
     private final JwtUtil jwtUtil;
+    private final AuditLogService auditLogService;
 
     // ✅ User: Apply for Leave
     @PostMapping("/apply")
@@ -60,7 +60,7 @@ public class LeaveController {
 
     // ✅ Admin: View All Leave Requests
     @GetMapping("/requests")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<?> getLeaveRequests(@RequestHeader("Authorization") String token) {
         String username = extractUsername(token);
         System.out.println("🔹 Fetch Leave Requests API called by: " + username);
@@ -78,13 +78,16 @@ public class LeaveController {
         User user = optionalUser.get();
 
         System.out.println("🔹 User Role: " + user.getRole());
-
-        if (!user.getRole().equals(Role.ADMIN)) {
-            System.out.println("❌ Access Denied: User is not an Admin");
-            return ResponseEntity.status(403).body("Forbidden");
-        }
         List<LeaveRequest> leaveRequests = leaveService.getAllLeaveRequests();
         System.out.println("✅ Returning Leave Requests: " + leaveRequests.size());
+        return ResponseEntity.ok(leaveRequests);
+    }
+
+    // User: View own leave requests
+    @GetMapping("/my-requests/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<LeaveRequest>> getMyLeaveRequests(@PathVariable Long userId) {
+        List<LeaveRequest> leaveRequests = leaveService.getLeaveRequestsByUserId(userId);
         return ResponseEntity.ok(leaveRequests);
     }
 
@@ -93,16 +96,22 @@ public class LeaveController {
     // ✅ Admin: Approve Leave
     @PutMapping("/approve/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> approveLeave(@PathVariable Long id) {
+    public ResponseEntity<String> approveLeave(@RequestHeader("Authorization") String token,
+                                               @PathVariable Long id) {
         leaveService.updateLeaveStatus(id, "APPROVED");
+        String adminUsername = extractUsername(token);
+        auditLogService.logAction("APPROVE_LEAVE", adminUsername, "Approved leave request ID: " + id);
         return ResponseEntity.ok("✅ Leave request approved");
     }
 
     // ✅ Admin: Deny Leave
     @PutMapping("/deny/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> denyLeave(@PathVariable Long id) {
+    public ResponseEntity<String> denyLeave(@RequestHeader("Authorization") String token,
+                                            @PathVariable Long id) {
         leaveService.updateLeaveStatus(id, "DENIED");
+        String adminUsername = extractUsername(token);
+        auditLogService.logAction("DENY_LEAVE", adminUsername, "Denied leave request ID: " + id);
         return ResponseEntity.ok(" Leave request denied");
     }
 

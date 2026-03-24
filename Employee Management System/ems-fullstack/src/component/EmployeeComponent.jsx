@@ -45,17 +45,17 @@ function EmployeeComponent() {
     e.preventDefault();
 
     if (!employee.firstName.trim()) {
-      alert("First name is required!");
+      toast.warning("First name is required.");
       return;
     }
 
     if (!employee.lastName.trim()) {
-      alert("Last name is required!");
+      toast.warning("Last name is required.");
       return;
     }
 
-    if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(employee.email)) {
-      alert("Enter a valid Gmail address!");
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/.test(employee.email)) {
+      toast.warning("Enter a valid email address.");
       return;
     }
 
@@ -80,7 +80,11 @@ function EmployeeComponent() {
           navigate("/admin");
         })
         .catch((error) => {
-          toast.error("Failed to update employee.");
+          const message =
+            error?.response?.data?.message ||
+            (typeof error?.response?.data === "string" ? error.response.data : null) ||
+            "Failed to update employee.";
+          toast.error(message);
           console.error(error);
         });
     } else {
@@ -90,7 +94,11 @@ function EmployeeComponent() {
           navigate("/admin");
         })
         .catch((error) => {
-          toast.error("Failed to add employee.");
+          const message =
+            error?.response?.data?.message ||
+            (typeof error?.response?.data === "string" ? error.response.data : null) ||
+            "Failed to add employee.";
+          toast.error(message);
           console.error(error);
         });
     }
@@ -145,10 +153,10 @@ function EmployeeComponent() {
                   onChange={handleChange}
                   required
                 />
-                {!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(employee.email) &&
+                {!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/.test(employee.email) &&
                   employee.email && (
                     <small className="text-danger">
-                      Enter a valid Gmail address.
+                      Enter a valid email address.
                     </small>
                   )}
               </div>

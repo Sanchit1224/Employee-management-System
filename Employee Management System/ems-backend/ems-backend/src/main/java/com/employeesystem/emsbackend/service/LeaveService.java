@@ -20,6 +20,10 @@ public class LeaveService {
         return leaveRepository.findAll();
     }
 
+    public List<LeaveRequest> getLeaveRequestsByUserId(Long userId) {
+        return leaveRepository.findByUserIdOrderByStartDateDesc(userId);
+    }
+
     public void updateLeaveStatus(Long id, String status) {
         LeaveRequest leaveRequest = leaveRepository.findById(id).orElseThrow();
         leaveRequest.setStatus(status);

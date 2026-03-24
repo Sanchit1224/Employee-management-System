@@ -71,4 +71,30 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    // 🔹 Get current authenticated user profile
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String token) {
+        try {
+            if (token == null || !token.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid token.");
+            }
+
+            String username = jwtUtil.extractUsername(token.substring(7));
+            Optional<User> optionalUser = userService.findByUsername(username);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            User user = optionalUser.get();
+            Map<String, Object> response = new HashMap<>();
+            response.put("userId", user.getId());
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("role", user.getRole().name());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token.");
+        }
+    }
+
 }

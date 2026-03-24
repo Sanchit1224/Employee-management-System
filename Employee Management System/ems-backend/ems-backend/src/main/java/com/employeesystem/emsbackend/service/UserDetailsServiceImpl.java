@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())  // Ensure password is hashed in DB
-                .roles("USER") // Set user roles
+                .roles(user.getRole().name()) // Use persisted role (ADMIN/MANAGER/USER)
                 .build();
     }
 }

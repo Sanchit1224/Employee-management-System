@@ -13,8 +13,12 @@ const PrivateRoute = ({ role }) => {
   const { user } = useContext(AuthContext);
 
   if (!user) return <Navigate to="/login" />;
-  if (role && user.role !== role) {
-    return user.role === "ADMIN" ? <Navigate to="/admin" /> : <Navigate to="/user" />;
+
+  const allowedRoles = Array.isArray(role) ? role : role ? [role] : [];
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    if (user.role === "ADMIN") return <Navigate to="/admin" />;
+    if (user.role === "MANAGER") return <Navigate to="/manager" />;
+    return <Navigate to="/user" />;
   }
   return <Outlet />;  // ✅ Ensures nested routes work properly
 };
@@ -34,6 +38,11 @@ function App() {
           <Route path="/admin" element={<ListEmployeeComponent />} />
           <Route path="/add-employee" element={<EmployeeComponent />} />
           <Route path="/update-employee/:id" element={<EmployeeComponent />} />
+        </Route>
+
+        {/* 🔥 Manager Route */}
+        <Route element={<PrivateRoute role="MANAGER" />}>
+          <Route path="/manager" element={<ListEmployeeComponent />} />
         </Route>
 
         {/* 🔥 User Routes */}
