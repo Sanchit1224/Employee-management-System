@@ -27,8 +27,9 @@ const Login = () => {
         localStorage.setItem("authToken", token);
         localStorage.setItem("userId", userId.toString());
         localStorage.setItem("role", role);
+        localStorage.setItem("username", username);
 
-        login(token, userId, role); //  Call AuthContext login method
+        login(token, userId, role, username); //  Call AuthContext login method
 
         toast.success(`Login Successful! Redirecting to ${role} Panel...`);
 

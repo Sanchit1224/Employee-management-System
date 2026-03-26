@@ -25,7 +25,7 @@ function Header() {
                 <div>
                     {user ? (
                         <>
-                            <span className="navbar-brand navi">Welcome, {user.role}!</span>
+                            <span className="navbar-brand navi">Welcome, {user.username} !</span>
                             <Link className="navbar-brand navi" to="#" onClick={logout}>
                                 <FaSignOutAlt className="me-1" /> Logout
                             </Link>

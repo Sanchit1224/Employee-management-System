@@ -14,17 +14,19 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("authToken");
     const role = localStorage.getItem("role") || "USER"; // Default role to USER if missing
     const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
     
-    return token && userId ? { token, role, userId } : null;
+    return token && userId ? { token, role, userId, username } : null;
   });
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const role = localStorage.getItem("role") || "USER";
     const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
 
-    if (token && role && userId) {
-      setUser({ token, role, userId });
+    if (token && role && userId && username) {
+      setUser({ token, role, userId, username });
     }
   }, []);
 
@@ -56,10 +58,11 @@ export const AuthProvider = ({ children }) => {
       });
   }, [user, navigate]);
 
-  const login = (token, userId, role) => {
+  const login = (token, userId, role, username) => {
     localStorage.setItem("authToken", token);
     localStorage.setItem("role", role);
     localStorage.setItem("userId", userId); // Store userId properly
+    localStorage.setItem("username", username); // Store username
 
       //  Decode token to verify its content
   try {
@@ -69,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     console.error("Error decoding token:", error.message);
   }
 
-    setUser({ token, role, userId });
+    setUser({ token, role, userId, username });
 
     if (role === "ADMIN") {
       navigate("/admin");
@@ -84,6 +87,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("role");
     localStorage.removeItem("userId"); //  Remove userId on logout
+    localStorage.removeItem("username"); //  Remove username on logout
 
     setUser(null);
     navigate("/login"); //  Redirect properly

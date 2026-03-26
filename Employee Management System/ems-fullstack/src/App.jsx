@@ -6,6 +6,8 @@ import EmployeeComponent from "./component/EmployeeComponent";
 import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import UserDashboard from "./component/UserDashboard";
+import ManagerDashboard from "./component/ManagerDashboard";
+import AdminDashboard from "./component/AdminDashboard";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
 
@@ -35,14 +37,14 @@ function App() {
 
         {/* 🔥 Admin Routes */}
         <Route element={<PrivateRoute role="ADMIN" />}>
-          <Route path="/admin" element={<ListEmployeeComponent />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/add-employee" element={<EmployeeComponent />} />
           <Route path="/update-employee/:id" element={<EmployeeComponent />} />
         </Route>
 
         {/* 🔥 Manager Route */}
         <Route element={<PrivateRoute role="MANAGER" />}>
-          <Route path="/manager" element={<ListEmployeeComponent />} />
+          <Route path="/manager" element={<ManagerDashboard />} />
         </Route>
 
         {/* 🔥 User Routes */}
