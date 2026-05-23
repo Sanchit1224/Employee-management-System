@@ -32,7 +32,9 @@ A full-stack Employee Management System built using **React.js** for the fronten
 ### Backend
 - Spring Boot  
 - Spring Data JPA  
-- REST API  
+- REST API
+- Spring Security
+- JWT(Json Web Token)
 
 ### Database
 - MySQL  
