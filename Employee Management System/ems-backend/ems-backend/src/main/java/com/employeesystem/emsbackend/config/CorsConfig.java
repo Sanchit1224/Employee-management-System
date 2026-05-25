@@ -17,7 +17,7 @@ public class CorsConfig {
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",       // your local React dev server
-                "https://your-ems.vercel.app"  // ← you will update this after Vercel deploy
+                "https://employee-management-system-inky-ten.vercel.app"  // ← you will update this after Vercel deploy
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
