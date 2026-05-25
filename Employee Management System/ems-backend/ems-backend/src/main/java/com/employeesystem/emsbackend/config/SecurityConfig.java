@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 "/api/leave/approve/**", "/api/leave/deny/**",
                                 "/api/user/payroll/add").hasRole("ADMIN") // Admin access
                         .requestMatchers("/api/emp/**", "/api/leave/requests").hasAnyRole("ADMIN", "MANAGER") // Admin/Manager access
-                        .requestMatchers("/api/user/**", "/api/leave/apply", "/api/leave/my-requests/**",
+                           .requestMatchers("/api/user/**", "/api/leave/apply", "/api/leave/my-requests/**",
                                 "/api/user/payroll/**").hasRole("USER") // User access
                         .anyRequest().authenticated() // All Other Requests Require Authentication
                 )

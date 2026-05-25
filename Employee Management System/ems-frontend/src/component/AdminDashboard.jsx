@@ -265,9 +265,9 @@ const AdminDashboard = () => {
           <div className="container mt-4">
             <div className="card shadow-sm p-3 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary mb-4">👥 Employee Management</h3>
+                <h3 className="card-title text-center text-dark mb-4">👥 Employee Management</h3>
 
-                <button className="btn btn-success mb-3" onClick={addNewEmployee}>
+                <button className="btn btn-dark mb-3" onClick={addNewEmployee}>
                   ➕ Add New Employee
                 </button>
 
@@ -318,16 +318,16 @@ const AdminDashboard = () => {
                             </td>
                             <td className="text-center">
                               <button
-                                className="btn btn-sm btn-primary me-2"
+                                className="btn btn-sm btn-dark me-2"
                                 onClick={() => updateEmployee(emp.id)}
                               >
-                                ✏️ Edit
+                                 Edit
                               </button>
                               <button
-                                className="btn btn-sm btn-danger"
+                                className="btn btn-sm btn-dark"
                                 onClick={() => deleteEmployeeHandler(emp.id)}
                               >
-                                🗑️ Delete
+                                 Delete
                               </button>
                             </td>
                           </tr>
@@ -345,7 +345,7 @@ const AdminDashboard = () => {
           <div className="container mt-4">
             <div className="card shadow-sm p-3 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary mb-4">📋 Leave Requests</h3>
+                <h3 className="card-title text-center text-dark mb-4">📋 Leave Requests</h3>
 
                 {leaveRequests.length === 0 ? (
                   <p className="text-center text-muted">No leave requests available.</p>
@@ -409,7 +409,7 @@ const AdminDashboard = () => {
               <div className="col-md-6">
                 <div className="card shadow-sm p-3 bg-white rounded">
                   <div className="card-body">
-                    <h3 className="card-title text-center text-primary mb-4">💰 Manage Payroll</h3>
+                    <h3 className="card-title text-center text-dark mb-4">💰 Manage Payroll</h3>
 
                     <form onSubmit={handlePayrollSubmit}>
                       <div className="mb-3">
@@ -455,7 +455,7 @@ const AdminDashboard = () => {
                         />
                       </div>
 
-                      <button type="submit" className="btn btn-primary w-100">
+                      <button type="submit" className="btn btn-dark w-100">
                         💾 Save Payroll
                       </button>
                     </form>
@@ -495,7 +495,7 @@ const AdminDashboard = () => {
           <div className="container mt-4">
             <div className="card shadow-sm p-3 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary mb-4">📜 Audit Logs</h3>
+                <h3 className="card-title text-center text-dark mb-4">📜 Audit Logs</h3>
 
                 {auditLogs.length === 0 ? (
                   <p className="text-center text-muted">No audit logs available.</p>

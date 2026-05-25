@@ -37,9 +37,13 @@ public class AuthController {
         // 🔥 Hash password before saving
      //   user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // ✅ Assign default role if missing
-        if (user.getRole() == null) {
-            user.setRole(Role.USER);
+        // Public signup: only Admin or Manager. Employees are created by an admin with Add Employee.
+        if (user.getRole() == null || user.getRole() == Role.USER) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Self-registration is only for Admin or Manager. Employee accounts are created by an administrator.");
+        }
+        if (user.getRole() != Role.ADMIN && user.getRole() != Role.MANAGER) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid role for registration.");
         }
 
         try {

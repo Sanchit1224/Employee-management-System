@@ -19,8 +19,7 @@ function EmployeeComponent() {
     lastName: "",
     email: "",
     username: "",
-    password: "Password123",
-    role: "USER",
+    password: "",
   });
 
   useEffect(() => {
@@ -32,7 +31,16 @@ function EmployeeComponent() {
 
     if (id) {
       editEmployee(id, user.token)
-        .then((response) => setEmployee(response.data))
+        .then((response) => {
+          const data = response.data;
+          setEmployee({
+            firstName: data.firstName || "",
+            lastName: data.lastName || "",
+            email: data.email || "",
+            username: data.user?.username || "",
+            password: "",
+          });
+        })
         .catch((error) => console.error("Error fetching employee:", error));
     }
   }, [id, user, navigate]);
@@ -59,22 +67,39 @@ function EmployeeComponent() {
       return;
     }
 
+    if (!id) {
+      if (!employee.username.trim()) {
+        toast.warning("Username is required for the employee login.");
+        return;
+      }
+      if (!employee.password || employee.password.length < 6) {
+        toast.warning("Password must be at least 6 characters.");
+        return;
+      }
+    }
+
     saveEmployee();
   };
 
-  function saveEmployee(e) {
-    const updatedEmployee = {
-      ...employee,
-      username: employee.firstName,
-      password: employee.password || "Password123",
-      role: employee.role || "USER",
-      email: employee.email,
-      firstName: employee.firstName,
-      lastName: employee.lastName,
+  function saveEmployee() {
+    const payload = {
+      firstName: employee.firstName.trim(),
+      lastName: employee.lastName.trim(),
+      email: employee.email.trim(),
+      username: employee.username.trim(),
+      password: employee.password,
     };
 
     if (id) {
-      updateDataEmployee(id, updatedEmployee, user.token)
+      const updatePayload = {
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: payload.email,
+      };
+      if (employee.password.trim()) {
+        updatePayload.password = employee.password;
+      }
+      updateDataEmployee(id, updatePayload, user.token)
         .then(() => {
           toast.success("Employee updated successfully!");
           navigate("/admin");
@@ -88,9 +113,9 @@ function EmployeeComponent() {
           console.error(error);
         });
     } else {
-      savedEmployee(updatedEmployee, user.token)
+      savedEmployee(payload, user.token)
         .then(() => {
-          toast.success("Employee added successfully!");
+          toast.success("Employee and login created. They can sign in with the username and password you set.");
           navigate("/admin");
         })
         .catch((error) => {
@@ -161,17 +186,60 @@ function EmployeeComponent() {
                   )}
               </div>
 
-              <div className="form-group mb-3">
-                <select
-                  name="role"
-                  className="form-control"
-                  value={employee.role}
-                  onChange={handleChange}
-                >
-                  <option value="USER">USER</option>
-                  <option value="ADMIN">ADMIN</option>
-                </select>
-              </div>
+              {!id ? (
+                <>
+                  <div className="form-group mb-3">
+                    <label className="form-label text-start d-block">Login username</label>
+                    <input
+                      type="text"
+                      name="username"
+                      placeholder="Employee will use this to sign in"
+                      value={employee.username}
+                      className="form-control"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group mb-3">
+                    <label className="form-label text-start d-block">Initial password</label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Share this securely with the employee"
+                      value={employee.password}
+                      className="form-control"
+                      onChange={handleChange}
+                      required
+                      minLength={6}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="form-group mb-3">
+                    <label className="form-label text-start d-block">Login username</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={employee.username}
+                      disabled
+                    />
+                    <small className="text-muted">Username cannot be changed here.</small>
+                  </div>
+                  <div className="form-group mb-3">
+                    <label className="form-label text-start d-block">New password (optional)</label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Leave blank to keep current password"
+                      value={employee.password}
+                      className="form-control"
+                      onChange={handleChange}
+                      minLength={6}
+                    />
+                  </div>
+                </>
+              )}
 
               <button type="submit" className="btn btn-success">
                 Save

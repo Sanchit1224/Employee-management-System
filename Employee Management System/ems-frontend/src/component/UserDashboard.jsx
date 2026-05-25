@@ -238,7 +238,7 @@ const UserDashboard = () => {
           <>
             <div className="card shadow-sm p-3 mb-4 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary">📝 Apply for Leave</h3>
+                <h3 className="card-title text-center text-dark">📝 Apply for Leave</h3>
                 <div className="mb-3">
                   <label className="form-label fw-bold">Start Date:</label>
                   <input type="date" className="form-control" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
@@ -251,7 +251,7 @@ const UserDashboard = () => {
                   <label className="form-label fw-bold">Leave Reason:</label>
                   <textarea className="form-control" rows="3" value={leaveReason} onChange={(e) => setLeaveReason(e.target.value)} placeholder="Enter leave reason..." required></textarea>
                 </div>
-                <button className="btn btn-primary w-100" onClick={handleLeaveApplication}>
+                <button className="btn btn-dark w-100" onClick={handleLeaveApplication}>
                   📤 Submit Leave Request
                 </button>
               </div>
@@ -313,7 +313,7 @@ const UserDashboard = () => {
         {selectedSection === "attendance" && (
           <div className="card shadow-sm p-3 bg-white rounded">
             <div className="card-body">
-              <h3 className="card-title text-center text-info">Attendance Report</h3>
+              <h3 className="card-title text-center text-dark">Attendance Report</h3>
               <div className="row g-2 mb-3">
                 <div className="col-md-4">
                   <label className="form-label fw-bold">Month</label>
@@ -365,7 +365,7 @@ const UserDashboard = () => {
           <div className="card shadow-sm p-3 bg-white rounded">
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="card-title text-center text-primary mb-0">Notifications</h3>
+                <h3 className="card-title text-center text-dark mb-0">Notifications</h3>
                 <button className="btn btn-outline-danger btn-sm" onClick={clearNotifications}>
                   Clear All
                 </button>

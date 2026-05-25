@@ -149,7 +149,7 @@ const ManagerDashboard = () => {
           <div className="container mt-4">
             <div className="card shadow-sm p-3 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary mb-4">👥 Team Members</h3>
+                <h3 className="card-title text-center text-dark mb-4">👥 Team Members</h3>
 
                 <div className="row g-2 mb-3">
                   <div className="col-md-8">
@@ -210,7 +210,7 @@ const ManagerDashboard = () => {
           <div className="container mt-4">
             <div className="card shadow-sm p-3 bg-white rounded">
               <div className="card-body">
-                <h3 className="card-title text-center text-primary mb-4">📋 Leave Requests</h3>
+                <h3 className="card-title text-center text-dark mb-4">📋 Leave Requests</h3>
 
                 {leaveRequests.length === 0 ? (
                   <p className="text-center text-muted">No leave requests available.</p>

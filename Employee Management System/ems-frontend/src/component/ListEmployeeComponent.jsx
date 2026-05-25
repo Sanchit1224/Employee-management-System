@@ -120,6 +120,12 @@ function ListEmployeeComponent() {
     }
 
     function setPayrollForEmployee(emp) {
+        if (emp.user?.id) {
+            setPayrollForm((prev) => ({ ...prev, userId: String(emp.user.id) }));
+            toast.info("Payroll form prefilled from linked employee account.");
+            return;
+        }
+
         const matchedUser = users.find(
             (u) =>
                 u.email?.toLowerCase() === emp.email?.toLowerCase() ||

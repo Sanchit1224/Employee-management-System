@@ -1,7 +1,10 @@
 import axios from "axios";
 
-const USER_API = "http://localhost:8080/api/user";
-const LEAVE_API = "http://localhost:8080/api";
+// ✅ Single source of truth — reads from .env files automatically
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+
+const USER_API = `${BASE_URL}/api/user`;
+const LEAVE_API = `${BASE_URL}/api`;
 
 // ✅ Function to set authorization headers
 const authHeader = (token) => ({

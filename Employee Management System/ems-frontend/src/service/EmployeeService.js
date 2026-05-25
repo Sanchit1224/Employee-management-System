@@ -1,8 +1,12 @@
 import axios from "axios";
 
-const EMP_URL = "http://localhost:8080/api/emp";  // Base URL for employees
-const LEAVE_URL = "http://localhost:8080/api/leave"; // Base URL for leave management
-const ADMIN_URL = "http://localhost:8080/api/admin";
+// ✅ Single source of truth — reads from .env files automatically
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+
+
+const EMP_URL = `${BASE_URL}/api/emp`;  // Base URL for employees
+const LEAVE_URL = `${BASE_URL}/api/leave`; // Base URL for leave management
+const ADMIN_URL = `${BASE_URL}/api/admin`;
 
 // Function to set Authorization headers
 const authHeader = (token) => ({

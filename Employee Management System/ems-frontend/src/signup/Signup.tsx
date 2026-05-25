@@ -9,7 +9,7 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    role: "USER", // 🔥 Default role for new users
+    role: "MANAGER",
   });
   const navigate = useNavigate();
 
@@ -23,8 +23,17 @@ const Signup = () => {
       await axios.post("/auth/register", formData);
       toast.success("Registration successful! Redirecting to login...");
       setTimeout(() => navigate("/login"), 2000);
-    } catch (err) {
-      toast.error("Registration failed. Please try again.");
+    } catch (err: unknown) {
+      const message =
+        err &&
+        typeof err === "object" &&
+        "response" in err &&
+        err.response &&
+        typeof err.response === "object" &&
+        "data" in err.response
+          ? String((err.response as { data?: unknown }).data)
+          : "Registration failed. Please try again.";
+      toast.error(message);
       console.error("Registration error:", err);
     }
   };
@@ -47,6 +56,22 @@ const Signup = () => {
             onChange={handleChange}
             required
           />
+
+          <label htmlFor="role">Register as:</label>
+          <select
+            id="role"
+            name="role"
+            className="form-select mb-2"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          >
+            <option value="MANAGER">Manager</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          <p className="small text-muted mb-2">
+            Employee accounts are not self-registered. An administrator creates each employee (and their login) from Add Employee.
+          </p>
 
           <button type="submit" className="btn btn-dark">
             SignUp

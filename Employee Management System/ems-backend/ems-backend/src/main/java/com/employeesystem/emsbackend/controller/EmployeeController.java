@@ -1,5 +1,6 @@
 package com.employeesystem.emsbackend.controller;
 
+import com.employeesystem.emsbackend.dto.EmployeeAccountRequest;
 import com.employeesystem.emsbackend.entity.Employee;
 import com.employeesystem.emsbackend.service.AuditLogService;
 import com.employeesystem.emsbackend.service.EmployeeService;
@@ -26,18 +27,20 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createEmployee(@RequestHeader("Authorization") String token,
-                                            @RequestBody Employee employee) {
+                                            @RequestBody EmployeeAccountRequest request) {
         try {
-            // 🔥 Ensure only ADMINs can add employees
             String adminUsername = jwtUtil.extractUsername(token.substring(7));
-            //User admin = userService.findByUsername(adminUsername);
-            Employee savedEmployee = employeeService.addEmployee(employee);
+            Employee savedEmployee = employeeService.createEmployeeWithAccount(request);
             auditLogService.logAction(
                     "CREATE_EMPLOYEE",
                     adminUsername,
-                    "Created employee: " + savedEmployee.getFirstName() + " " + savedEmployee.getLastName()
+                    "Created employee + user login: " + savedEmployee.getFirstName() + " " + savedEmployee.getLastName()
             );
             return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error adding employee: " + e.getMessage());
@@ -63,8 +66,8 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateEmployee(@RequestHeader("Authorization") String token,
                                             @PathVariable Long id,
-                                            @RequestBody Employee updatedEmployee) {
-        Employee updatedEmp = employeeService.updateEmployee(id, updatedEmployee);
+                                            @RequestBody EmployeeAccountRequest request) {
+        Employee updatedEmp = employeeService.updateEmployee(id, request);
         String adminUsername = jwtUtil.extractUsername(token.substring(7));
         auditLogService.logAction(
                 "UPDATE_EMPLOYEE",
