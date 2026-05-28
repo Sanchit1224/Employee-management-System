@@ -68,13 +68,14 @@ public class SecurityConfig {
         // ✅ Added Vercel production URL alongside local dev
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
+                "https://*.vercel.app",
                 "https://employee-management-system-inky-ten.vercel.app",
                 "https://employee-management-system-git-main-sanchit073.vercel.app",
                 "https://employee-management-system-ad0ug6ujr-sanchit073.vercel.app"
 
         ));
 
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ✅ Allow frontend access
+        //configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ✅ Allow frontend access
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
