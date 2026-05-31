@@ -1,0 +1,22 @@
+/* ===== MOBILE RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevents horizontal scroll */
+}
+
+img, video {
+  max-width: 100%;   /* images never overflow their container */
+  height: auto;
+}
+
+table {
+  width: 100%;
+  display: block;
+  overflow-x: auto;  /* tables scroll horizontally on mobile */
+  -webkit-overflow-scrolling: touch;
+}
