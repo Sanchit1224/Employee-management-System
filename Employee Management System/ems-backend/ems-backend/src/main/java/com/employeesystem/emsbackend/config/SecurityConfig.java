@@ -71,7 +71,7 @@ public class SecurityConfig {
 //        ));
         configuration.setAllowedOrigins(List.of(
                 "https://employee-management-system-inky-ten.vercel.app",
-                "https://employee-management-system-git-main-sanchit073.vercel.app/**",
+                "https://employee-management-system-git-main-sanchit073.vercel.app",
                 "https://employee-management-system-ad0ug6ujr-sanchit073.vercel.app"
 
         ));
